@@ -28,7 +28,7 @@ const map = new Map({
 // Popup overlay
 const popup = new Overlay({
     element: document.createElement('div'),
-    positioning: 'bottom-center',
+    positioning: 'top-center',
     stopEvent: false,
 });
 popup.getElement().className = 'popup';
@@ -66,7 +66,7 @@ map.on('click', function (event) {
             marker.setStyle(new Style({
                 image: new Icon({
                     src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg',
-                    scale: 0.05,
+                    scale: 0.9,
                 })
             }));
             vectorSource.clear(); // Clear previous markers
@@ -87,22 +87,23 @@ function getCurrentLocation() {
             const coordinates = fromLonLat([lon, lat]);
             map.getView().setCenter(coordinates);
             map.getView().setZoom(15);
-            
+           
+
             // Add marker for current location
             const marker = new Feature({
                 geometry: new Point(coordinates),
             });
             marker.setStyle(new Style({
-                image: new Icon({
-                    src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg',
-                    scale: 0.05,
-                })
-            }));
-            
-            vectorSource.clear(); // Clear previous markers
+              image: new Icon({
+                  src: 'https://maps.google.com/mapfiles/kml/paddle/red-circle.png', 
+                  scale: 0.9,
+                  anchor: [0.5, 1],
+              })
+          }));          
             vectorSource.addFeature(marker);
             
             // Update location info
+
             fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
                 .then(response => response.json())
                 .then(data => {
