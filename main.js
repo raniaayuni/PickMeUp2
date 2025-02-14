@@ -65,12 +65,12 @@ map.on('click', function (event) {
             });
             marker.setStyle(new Style({
                 image: new Icon({
-                    src: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg',
+                    src: 'https://maps.google.com/mapfiles/kml/paddle/red-circle.png',
                     scale: 0.9,
                 })
             }));
-            vectorSource.clear(); // Clear previous markers
-            vectorSource.addFeature(marker);
+            
+            vectorSource.addFeature(marker); // Do not clear previous markers
             
             // Update info section
             info.innerHTML = `Coordinates: ${lat}, ${lon}`;
@@ -88,7 +88,6 @@ function getCurrentLocation() {
             map.getView().setCenter(coordinates);
             map.getView().setZoom(15);
            
-
             // Add marker for current location
             const marker = new Feature({
                 geometry: new Point(coordinates),
@@ -103,7 +102,6 @@ function getCurrentLocation() {
             vectorSource.addFeature(marker);
             
             // Update location info
-
             fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
                 .then(response => response.json())
                 .then(data => {
